@@ -1,0 +1,45 @@
+<a href="javascript:(function() { 
+	[].forEach.call(document.querySelectorAll('.comment .dead'), function(c) { 
+			c.setAttribute('style', 'color: #f55 !important;'); 
+	}); 
+	[].forEach.call(document.querySelectorAll('.comment font[color]'), function(c) { 
+		c.setAttribute('color', c.getAttribute('color').replace(/#(..)(..)(..)/g, 
+			function(match, $1, $2, $3) { 
+				var r = Math.round((255 * parseInt($1, 16) / 255)).toString(16); 
+				var g = Math.round((99 * parseInt($2, 16) / 255)).toString(16); 
+				var b = Math.round((99 * parseInt($3, 16) / 255)).toString(16); 
+				return '#' + ('00'+r).substring(r.length) + ('00'+g).substring(g.length) + ('00'+b).substring(b.length);
+			})
+		); 
+	}); 
+}) ()">Re-Color HN</a>
+
+<a href="javascript:(function() { 
+	var colorStuff = function($) { 
+		$('.comment .dead').css('color: #f55 !important;'); 
+		$('.comment font[color]').each(function () { 
+			var $this = $(this); 
+			$this.attr('color', $this.attr('color').replace(/#(..)(..)(..)/g, 
+				function(match, $1, $2, $3) { 
+					var r = Math.round((255 * parseInt($1, 16) / 255)).toString(16);
+					var g = Math.round((99 * parseInt($2, 16) / 255)).toString(16); 
+					var b = Math.round((99 * parseInt($3, 16) / 255)).toString(16); 
+					return '#' + ('00'+r).substring(r.length) + ('00'+g).substring(g.length) + ('00'+b).substring(b.length); 
+				}) 
+			); 
+		}); 
+	}; 
+	if (window.jQuery) { 
+		colorStuff(jQuery); 
+	} else { 
+		var script = document.createElement('SCRIPT'); 
+		script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'; 
+		script.type = 'text/javascript'; 
+		document.getElementsByTagName('head')[0].appendChild(script); 
+		var checkReady = function(callback) { 
+			if (window.jQuery) { callback(jQuery); } 
+			else { window.setTimeout(function() { checkReady(callback); }, 100); } 
+		}; 
+		checkReady(colorStuff); 
+	} 
+})();void 0;">Re-Color HN (Legacy w/ jQuery)</a>
